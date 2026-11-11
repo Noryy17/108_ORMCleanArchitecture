@@ -35,6 +35,25 @@ async function createKomik(req, res) {
     }
 }
 
+async function updateKomik(req, res) {
+    const { id } = req.params;
+    const { title, description, author } = req.body;
+    try {
+        const komik = await db.Komik.findByPk(id);
+        if (!komik) {
+            return res.status(404).json({ error: 'Komik not found' });
+        }
+        // hanya field yang dikirim yang diubah
+        if (title !== undefined) komik.title = title;
+        if (description !== undefined) komik.description = description;
+        if (author !== undefined) komik.author = author;
+        await komik.save();
+        res.status(200).json(komik);
+    } catch (err) {
+        console.error('Error updating komik:', err.message);
+        res.status(500).json({ error: 'Failed to update komik' });
+    }
+}
 
 
 
