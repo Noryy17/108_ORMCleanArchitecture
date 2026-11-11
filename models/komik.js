@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         author: {
             type: DataTypes.STRING
         }
-
+    }, {
+        // kolom tabel hanya id, title, description, author
+        timestamps: false
     });
     return Komik;
 };
